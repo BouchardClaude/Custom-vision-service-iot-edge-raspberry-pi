@@ -7,6 +7,7 @@ import random
 import sys
 import time
 
+
 import iothub_client
 # pylint: disable=E0611
 # Disabling linting that is not supported by Pylint for C extensions such as iothub_client. See issue https://github.com/PyCQA/pylint/issues/1955 

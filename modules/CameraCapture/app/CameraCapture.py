@@ -201,10 +201,12 @@ class CameraCapture(object):
                 
                 #forwarding outcome of external processing to the EdgeHub
                 if response != "[]" and self.sendToHubCallback is not None:
-                    self.sendToHubCallback(response)
-                    if self.verbose:
-                        print("Time to message from processing service to edgeHub: " + self.__displayTimeDifferenceInMs(time.time(), startSendingToEdgeHub))
-                        startDisplaying = time.time()
+                    #CB only forward if the confidence is high
+                    if response['Probability'] >= 0.3
+                        self.sendToHubCallback(response)
+                        if self.verbose:
+                            print("Time to message from processing service to edgeHub: " + self.__displayTimeDifferenceInMs(time.time(), startSendingToEdgeHub))
+                            startDisplaying = time.time()
 
             #Display frames
             if self.showVideo:
