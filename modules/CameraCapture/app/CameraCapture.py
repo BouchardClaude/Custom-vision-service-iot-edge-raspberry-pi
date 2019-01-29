@@ -203,20 +203,17 @@ class CameraCapture(object):
                 if response != "[]" and self.sendToHubCallback is not None:
                     #CB only forward if the confidence is high 
                     json_array = json.loads(response)
-                    store_list = []
-
+                    # if something is detected with high confidence, send it
+                    detectionWithConfidence = "False"
                     for item in json_array:
-                        store_details = {"Tag":None, "Probability":None}
-                        store_details['Tag'] = item['Tag']
-                        store_details['Probability'] = item['Probability']
+                        if item['Probability'] > 0.8:
+                                detectionWithConfidence = "True"
                         print (item['Probability'])
-                        store_list.append(store_details)
-                    print(store_list)
-
-                    self.sendToHubCallback(response)
-                    if self.verbose:
-                        print("Time to message from processing service to edgeHub: " + self.__displayTimeDifferenceInMs(time.time(), startSendingToEdgeHub))
-                        startDisplaying = time.time()
+                    if detectionWithConfidence:
+                        self.sendToHubCallback(response)
+                        if self.verbose:
+                            print("Time to message from processing service to edgeHub: " + self.__displayTimeDifferenceInMs(time.time(), startSendingToEdgeHub))
+                            startDisplaying = time.time()
 
             #Display frames
             if self.showVideo:
