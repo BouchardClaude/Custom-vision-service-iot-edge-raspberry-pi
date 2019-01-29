@@ -17,6 +17,7 @@ RUN apt-get update && \
 RUN pip install trollius tornado
 
 ADD /app/ .
+ADD /test/ .
 
 # Expose the port
 EXPOSE 5012
